@@ -1,0 +1,255 @@
+﻿@using TaxCalculator.Models.Order;
+@model Order
+@{
+    ViewData["Title"] = "TaxJar Get Tax On Order";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+<div id="react-root"></div>
+<script type="text/babel">
+    class GetTaxOnOrder extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                onInput: true,
+                toStreet: null,
+                toCity: null,
+                toState: null,
+                toZip: null,
+                toCountry: null,
+                fromStreet: null,
+                fromCity: null,
+                fromState: null,
+                fromZip: null,
+                fromCountry: null,
+                amount: null,
+                shipping: null,
+                lineItems: [{key: 0, id: null, quantity: null, unitPrice: null, productTaxCode: null}],
+                taxInformation: null
+            };
+        }
+
+        addLineItem() {
+            const lineItems = this.state.lineItems;
+            lineItems.push({key: this.state.lineItems.length, id: null, quantity: null, unitPrice: null, productTaxCode: null});
+            this.setState({
+                lineItems: lineItems
+            });
+        }
+
+        submit() {
+            console.log("string", JSON.stringify({
+                ToStreet: this.state.toStreet,
+                ToCity: this.state.toCity,
+                ToState: this.state.toState,
+                ToZip: this.state.toZip,
+                ToCountry: this.state.toCountry,
+                FromStreet: this.state.fromStreet,
+                FromCity: this.state.fromCity,
+                FromState: this.state.fromState,
+                FromZip: this.state.fromZip,
+                FromCountry: this.state.fromCountry,
+                Amount: this.state.amount,
+                Shipping: this.state.shipping,
+                LineItems: this.state.lineItems.map(lineItem => {
+                    return {
+                        ID: lineItem.id,
+                        Quantity: lineItem.quantity,
+                        UnitPrice: lineItem.unitPrice,
+                        ProductTaxCode: lineItem.productTaxCode
+                    };
+                })
+            }));
+            fetch('/TaxJar/TaxOnOrder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ToStreet: this.state.toStreet,
+                    ToCity: this.state.toCity,
+                    ToState: this.state.toState,
+                    ToZip: this.state.toZip,
+                    ToCountry: this.state.toCountry,
+                    FromStreet: this.state.fromStreet,
+                    FromCity: this.state.fromCity,
+                    FromState: this.state.fromState,
+                    FromZip: this.state.fromZip,
+                    FromCountry: this.state.fromCountry,
+                    Amount: this.state.amount,
+                    Shipping: this.state.shipping,
+                    LineItems: this.state.lineItems.map(lineItem => {
+                        return {
+                            ID: lineItem.id,
+                            Quantity: lineItem.quantity,
+                            UnitPrice: lineItem.unitPrice,
+                            ProductTaxCode: lineItem.productTaxCode
+                        };
+                    })
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    onInput: false,
+                    taxInformation: data
+                });
+            });
+        }
+
+        backToInput() {
+            this.setState({
+                onInput: true,
+                taxInformation: null
+            });
+        }
+
+        render() {
+            return (
+                <div>
+                    {this.state.onInput ? 
+                    <div>
+                        <input placeholder="To Street" type="text" value={this.state.toStreet} onChange={(event) => this.setState({ toStreet: event.target.value})} />
+                        <br />
+                        <input placeholder="To City" type="text" value={this.state.toCity} onChange={(event) => this.setState({ toCity: event.target.value})} />
+                        <br />
+                        <input placeholder="To State" type="text" value={this.state.toState} onChange={(event) => this.setState({ toState: event.target.value})} />
+                        <br />
+                        <input placeholder="To Zip" type="text" value={this.state.toZip} onChange={(event) => this.setState({ toZip: event.target.value})} />
+                        <br />
+                        <input placeholder="To Country" type="text" value={this.state.toCountry} onChange={(event) => this.setState({ toCountry: event.target.value})} />
+                        <br />
+                        <input placeholder="From Street" type="text" value={this.state.fromStreet} onChange={(event) => this.setState({ fromStreet: event.target.value})} />
+                        <br />
+                        <input placeholder="From City" type="text" value={this.state.fromCity} onChange={(event) => this.setState({ fromCity: event.target.value})} />
+                        <br />
+                        <input placeholder="From State" type="text" value={this.state.fromState} onChange={(event) => this.setState({ fromState: event.target.value})} />
+                        <br />
+                        <input placeholder="From Zip" type="text" value={this.state.fromZip} onChange={(event) => this.setState({ fromZip: event.target.value})} />
+                        <br />
+                        <input placeholder="From Country" type="text" value={this.state.fromCountry} onChange={(event) => this.setState({ fromCountry: event.target.value})} />
+                        <br />
+                        <input placeholder="Amount" type="text" value={this.state.amount} onChange={(event) => this.setState({ amount: event.target.value})} />
+                        <br />
+                        <input placeholder="Shipping" type="text" value={this.state.shipping} onChange={(event) => this.setState({ shipping: event.target.value})} />
+                        <br />
+
+                        <button className="btn btn-dark" onClick={() => this.addLineItem()}>Add Line</button>
+
+                        {this.state.lineItems.map(lineItem => {
+                            return (
+                                <div key={lineItem.key}>
+                                    <h3>Line Item {lineItem.key + 1}</h3>
+                                    <input placeholder="ID" type="text" value={lineItem.id} onChange={(event) => this.setState({
+                                        lineItems: this.state.lineItems.map(line => {
+                                            if (line.key !== lineItem.key) {
+                                                return line;
+                                            } else {
+                                                return {
+                                                    ...line,
+                                                    id: event.target.value
+                                                };
+                                            }
+                                        })
+                                    })} />
+                                    <br />
+                                    <input placeholder="Quantity" type="text" value={lineItem.quantity} onChange={(event) => this.setState({
+                                        lineItems: this.state.lineItems.map(line => {
+                                            if (line.key !== lineItem.key) {
+                                                return line;
+                                            } else {
+                                                return {
+                                                    ...line,
+                                                    quantity: event.target.value
+                                                };
+                                            }
+                                        })
+                                    })} />
+                                    <br />
+                                    <input placeholder="Unit Price" type="text" value={lineItem.unitPrice} onChange={(event) => this.setState({
+                                        lineItems: this.state.lineItems.map(line => {
+                                            if (line.key !== lineItem.key) {
+                                                return line;
+                                            } else {
+                                                return {
+                                                    ...line,
+                                                    unitPrice: event.target.value
+                                                };
+                                            }
+                                        })
+                                    })} />
+                                    <br />
+                                    <input placeholder="Product Tax Code" type="text" value={lineItem.productTaxCode} onChange={(event) => this.setState({
+                                        lineItems: this.state.lineItems.map(line => {
+                                            if (line.key !== lineItem.key) {
+                                                return line;
+                                            } else {
+                                                return {
+                                                    ...line,
+                                                    productTaxCode: event.target.value
+                                                };
+                                            }
+                                        })
+                                    })} />
+                                    <br />
+                                </div>
+                            );
+                        })}
+                        <button className="btn btn-primary" onClick={() => this.submit()}>Submit</button>
+                    </div>
+                    :
+                    <div>
+                        <button className="btn btn-dark" onClick={() => this.backToInput()}>Back</button>
+                        <table>
+                            <tr>
+                                <td>Amount to Collect:</td>
+                                <td>{this.state.taxInformation.amountToCollect}</td>
+                            </tr>
+                            <tr>
+                                <td>Freight Taxable:</td>
+                                <td>{this.state.taxInformation.freightTaxable}</td>
+                            </tr>
+                            <tr>
+                                <td>Has Nexus:</td>
+                                <td>{this.state.taxInformation.hasNexus}</td>
+                            </tr>
+                            <tr>
+                                <td>Order Total Amount:</td>
+                                <td>{this.state.taxInformation.orderTotalAmount}</td>
+                            </tr>
+                            <tr>
+                                <td>Rate:</td>
+                                <td>{this.state.taxInformation.rate}</td>
+                            </tr>
+                            <tr>
+                                <td>Shipping:</td>
+                                <td>{this.state.taxInformation.shipping}</td>
+                            </tr>
+                            <tr>
+                                <td>Tax Source:</td>
+                                <td>{this.state.taxInformation.taxSource}</td>
+                            </tr>
+                            <tr>
+                                <td>Taxable Amount:</td>
+                                <td>{this.state.taxInformation.taxableAmount}</td>
+                            </tr>
+                        </table>
+                    </div>
+                }
+                </div>
+            );
+        }
+    }
+
+    ReactDOM.render(
+      <GetTaxOnOrder />,
+      document.getElementById('react-root')
+    );
+</script>
+
+
+    

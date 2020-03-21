@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "TaxJar Get Rate";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+
+<form action="@Url.Action("GetRate", "TaxJar")">
+    <label for="Zip">Zip:</label><br />
+    <input type="text" id="Zip" name="Zip"><br />
+    <label for="Country">Country:</label><br />
+    <input type="text" id="Country" name="Country"><br />
+    <label for="City">City:</label><br />
+    <input type="text" id="City" name="City"><br />
+    <label for="Street">Street:</label><br />
+    <input type="text" id="Street" name="Street"><br />
+
+    <input type="submit" class="btn btn-dark" value="Get Rate" />
+
+</form> 

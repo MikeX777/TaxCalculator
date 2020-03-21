@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxCalculator", "TaxCalculator\TaxCalculator.csproj", "{6A6FAC8B-4FBA-48F4-A054-8D5F459FA7CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxService", "TaxService\TaxService.csproj", "{81AE5729-0829-4408-A345-B13417E255C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxServiceTests", "TaxServiceTests\TaxServiceTests.csproj", "{31C7D4C1-B18C-44E9-B5D9-D27F38BEC18F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A6FAC8B-4FBA-48F4-A054-8D5F459FA7CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A6FAC8B-4FBA-48F4-A054-8D5F459FA7CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A6FAC8B-4FBA-48F4-A054-8D5F459FA7CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A6FAC8B-4FBA-48F4-A054-8D5F459FA7CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81AE5729-0829-4408-A345-B13417E255C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81AE5729-0829-4408-A345-B13417E255C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81AE5729-0829-4408-A345-B13417E255C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81AE5729-0829-4408-A345-B13417E255C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31C7D4C1-B18C-44E9-B5D9-D27F38BEC18F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31C7D4C1-B18C-44E9-B5D9-D27F38BEC18F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31C7D4C1-B18C-44E9-B5D9-D27F38BEC18F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31C7D4C1-B18C-44E9-B5D9-D27F38BEC18F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4750BF0B-BCC4-4255-86B2-280D7B3C073C}
+	EndGlobalSection
+EndGlobal
